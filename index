@@ -1,0 +1,928 @@
+<!DOCTYPE html>
+<html lang="uz" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Xalilulloh Klinikasi - Zamonaviy Tibbiy Markaz</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Three.js CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <!-- Lucide Icons CDN -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <!-- Google Fonts (Inter) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    colors: {
+                        medical: {
+                            50: '#f0f9ff',
+                            100: '#e0f2fe',
+                            500: '#0ea5e9',
+                            600: '#0284c7',
+                            700: '#0369a1',
+                            800: '#075985',
+                            900: '#0c4a6e',
+                            accent: '#10b981',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #0f172a;
+            color: #f8fafc;
+            overflow-x: hidden;
+        }
+        
+        .glass-panel {
+            background: rgba(15, 23, 42, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .glass-card {
+            background: rgba(30, 41, 59, 0.6);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .glass-card:hover {
+            transform: translateY(-6px);
+            border-color: rgba(14, 165, 233, 0.4);
+            box-shadow: 0 20px 30px -10px rgba(14, 165, 233, 0.2);
+        }
+
+        .text-gradient {
+            background: linear-gradient(135deg, #38bdf8 0%, #818cf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .text-gradient-accent {
+            background: linear-gradient(135deg, #34d399 0%, #38bdf8 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #0f172a;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #1e293b;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #0ea5e9;
+        }
+    </style>
+</head>
+<body class="antialiased selection:bg-sky-500 selection:text-white">
+
+    <!-- Top Bar -->
+    <div class="bg-slate-900/80 border-b border-slate-800 text-xs text-slate-400 py-2 px-4 hidden sm:block">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <span class="flex items-center gap-1.5"><i data-lucide="phone" class="w-3.5 h-3.5 text-sky-400"></i> +998 (71) 200-00-03</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="map-pin" class="w-3.5 h-3.5 text-sky-400"></i> Toshkent sh., Chilonzor t., 10-mavze</span>
+                <span class="flex items-center gap-1.5"><i data-lucide="clock" class="w-3.5 h-3.5 text-emerald-400"></i> 24/7 Tezkor Yordam</span>
+            </div>
+            <div class="flex items-center gap-4">
+                <a href="#appointment" class="hover:text-sky-400 transition-colors">Onlayn Navbat</a>
+                <span>|</span>
+                <span class="text-emerald-400 flex items-center gap-1"><span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span> Ochiq</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 glass-panel border-b border-slate-800/80">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex items-center justify-between h-20">
+                <div class="flex items-center gap-3 cursor-pointer" onclick="window.scrollTo({top:0, behavior:'smooth'})">
+                    <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg shadow-sky-500/30">
+                        <i data-lucide="activity" class="w-6 h-6 text-white"></i>
+                    </div>
+                    <div>
+                        <span class="text-xl font-bold tracking-tight text-white block leading-none">XALILULLOH</span>
+                        <span class="text-xs tracking-widest text-sky-400 font-semibold uppercase">KLINIKASI</span>
+                    </div>
+                </div>
+
+                <!-- Desktop Menu -->
+                <div class="hidden md:flex items-center gap-8">
+                    <a href="#home" class="text-sm font-medium text-slate-200 hover:text-sky-400 transition-colors">Bosh sahifa</a>
+                    <a href="#services" class="text-sm font-medium text-slate-300 hover:text-sky-400 transition-colors">Xizmatlar</a>
+                    <a href="#interactive-3d" class="text-sm font-medium text-slate-300 hover:text-sky-400 transition-colors">3D Diagnostika</a>
+                    <a href="#doctors" class="text-sm font-medium text-slate-300 hover:text-sky-400 transition-colors">Shifokorlar</a>
+                    <a href="#contact" class="text-sm font-medium text-slate-300 hover:text-sky-400 transition-colors">Bog'lanish</a>
+                </div>
+
+                <div class="hidden md:flex items-center gap-4">
+                    <a href="#appointment" class="relative inline-flex items-center justify-center p-0.5 overflow-hidden text-sm font-medium rounded-xl group bg-gradient-to-br from-sky-500 to-indigo-600 group-hover:from-sky-500 group-hover:to-indigo-600 hover:text-white text-white shadow-lg shadow-sky-500/25 transition-all duration-300 hover:scale-105">
+                        <span class="relative px-5 py-2.5 transition-all ease-in duration-75 bg-slate-900 rounded-[10px] group-hover:bg-opacity-0 flex items-center gap-2">
+                            <i data-lucide="calendar" class="w-4 h-4 text-sky-400 group-hover:text-white"></i>
+                            Qabulga Yozilish
+                        </span>
+                    </a>
+                </div>
+
+                <!-- Mobile menu button -->
+                <div class="md:hidden">
+                    <button id="mobile-menu-btn" class="p-2 rounded-lg bg-slate-800 text-slate-300 hover:text-white">
+                        <i data-lucide="menu" class="w-6 h-6"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden glass-panel border-b border-slate-800 px-4 pt-2 pb-6 space-y-3">
+            <a href="#home" class="block py-2 text-slate-200 hover:text-sky-400 font-medium">Bosh sahifa</a>
+            <a href="#services" class="block py-2 text-slate-300 hover:text-sky-400 font-medium">Xizmatlar</a>
+            <a href="#interactive-3d" class="block py-2 text-slate-300 hover:text-sky-400 font-medium">3D Diagnostika</a>
+            <a href="#doctors" class="block py-2 text-slate-300 hover:text-sky-400 font-medium">Shifokorlar</a>
+            <a href="#contact" class="block py-2 text-slate-300 hover:text-sky-400 font-medium">Bog'lanish</a>
+            <a href="#appointment" class="block w-full text-center py-3 bg-gradient-to-r from-sky-500 to-indigo-600 text-white rounded-xl font-semibold shadow-lg">Qabulga Yozilish</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section with 3D Canvas -->
+    <section id="home" class="relative min-h-[90vh] flex items-center justify-center overflow-hidden pt-6">
+        <!-- Background Gradients -->
+        <div class="absolute top-1/4 left-10 w-96 h-96 bg-sky-500/20 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-96 h-96 bg-indigo-500/15 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full grid md:grid-cols-2 gap-12 items-center relative z-10">
+            <!-- Left Info Banner -->
+            <div class="space-y-6 text-center md:text-left">
+                <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-sky-500/10 border border-sky-500/20 text-sky-400 text-xs sm:text-sm font-medium">
+                    <i data-lucide="sparkles" class="w-4 h-4"></i>
+                    <span>Innovatsion Tibbiyot va Yuqori Texnologiyalar</span>
+                </div>
+                
+                <h1 class="text-4xl sm:text-5xl lg:text-6xl font-extrabold text-white leading-tight">
+                    Sog'lig'ingiz — Bizning <span class="text-gradient">Oliy Maqsadimiz</span>
+                </h1>
+                
+                <p class="text-slate-300 text-base sm:text-lg max-w-xl mx-auto md:mx-0 font-light leading-relaxed">
+                    "Xalilulloh Klinikasi" — Yevropa standartlariga javob beruvchi zamonaviy diagnostika, tajribali mutaxassislar va individual yondashuv maskani.
+                </p>
+
+                <div class="flex flex-col sm:flex-row gap-4 justify-center md:justify-start pt-2">
+                    <a href="#appointment" class="px-8 py-4 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-semibold rounded-xl shadow-lg shadow-sky-500/25 flex items-center justify-center gap-2 transition-all hover:scale-105">
+                        <i data-lucide="check-circle" class="w-5 h-5"></i>
+                        <span>Konsultatsiya Olish</span>
+                    </a>
+                    <a href="#services" class="px-8 py-4 bg-slate-800/80 hover:bg-slate-700/80 border border-slate-700 text-slate-200 font-semibold rounded-xl flex items-center justify-center gap-2 transition-all hover:border-slate-500">
+                        <i data-lucide="grid" class="w-5 h-5 text-sky-400"></i>
+                        <span>Xizmatlarimiz</span>
+                    </a>
+                </div>
+
+                <!-- Live Clinic Stats -->
+                <div class="grid grid-cols-3 gap-4 pt-8 border-t border-slate-800/80">
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-bold text-white">15+</div>
+                        <div class="text-xs text-slate-400 mt-1">Yillik Tajriba</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-bold text-sky-400">50K+</div>
+                        <div class="text-xs text-slate-400 mt-1">Sog'lom Bemorlar</div>
+                    </div>
+                    <div>
+                        <div class="text-2xl sm:text-3xl font-bold text-emerald-400">99%</div>
+                        <div class="text-xs text-slate-400 mt-1">Aniqlik Standarti</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Right 3D Interactive Canvas -->
+            <div class="relative h-[450px] sm:h-[520px] w-full rounded-3xl overflow-hidden glass-panel border border-slate-700/50 shadow-2xl flex items-center justify-center">
+                <!-- Three JS Canvas CONTAINER -->
+                <div id="hero-3d-container" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
+                
+                <!-- 3D Hint Badge -->
+                <div class="absolute bottom-4 left-4 right-4 sm:left-auto sm:right-4 bg-slate-900/80 backdrop-blur px-3 py-1.5 rounded-lg border border-slate-700 text-xs text-slate-300 flex items-center gap-2 justify-center pointer-events-none">
+                    <i data-lucide="move-3d" class="w-4 h-4 text-sky-400 animate-bounce"></i>
+                    <span>Sichqoncha bilan 3D modelni aylantiring</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Services Section -->
+    <section id="services" class="py-24 relative z-10">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs text-sky-400 uppercase tracking-widest font-semibold mb-2">Yuqori Malakali Tibbiyot</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Bizning Asosiy Xizmatlarimiz</p>
+                <p class="text-slate-400 mt-3">Eng so'nggi rusumdagi tibbiy uskunalar va tajribali mutaxassislar yordamida har bir bemorga sifatli tibbiy xizmat ko'rsatamiz.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Service 1 -->
+                <div class="glass-card p-8 rounded-2xl relative group">
+                    <div class="w-14 h-14 rounded-2xl bg-sky-500/10 border border-sky-500/20 flex items-center justify-center text-sky-400 mb-6 group-hover:scale-110 group-hover:bg-sky-500 group-hover:text-white transition-all duration-300">
+                        <i data-lucide="heart-pulse" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Kardiologiya</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">Yurak-qon tomir tizimi kasalliklarini erta aniqlash, EKG, Xolter va zamonaviy davolash usullari.</p>
+                    <a href="#appointment" class="inline-flex items-center text-xs font-semibold text-sky-400 hover:text-sky-300 gap-1">Navbatga yozilish <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+                </div>
+
+                <!-- Service 2 -->
+                <div class="glass-card p-8 rounded-2xl relative group">
+                    <div class="w-14 h-14 rounded-2xl bg-indigo-500/10 border border-indigo-500/20 flex items-center justify-center text-indigo-400 mb-6 group-hover:scale-110 group-hover:bg-indigo-500 group-hover:text-white transition-all duration-300">
+                        <i data-lucide="brain" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Nevrologiya</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">Bosh og'riqlari, asab tizimi va umurtqa pog'onasi muammolarini samarali davolash va reabilitatsiya.</p>
+                    <a href="#appointment" class="inline-flex items-center text-xs font-semibold text-indigo-400 hover:text-indigo-300 gap-1">Navbatga yozilish <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+                </div>
+
+                <!-- Service 3 -->
+                <div class="glass-card p-8 rounded-2xl relative group">
+                    <div class="w-14 h-14 rounded-2xl bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center text-emerald-400 mb-6 group-hover:scale-110 group-hover:bg-emerald-500 group-hover:text-white transition-all duration-300">
+                        <i data-lucide="scan" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">UZI va Diagnostika</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">4D UZI apparatlari, MSKT va laboratoriya tahlillari orqali a'zolarning o'ta aniq ko'rigi.</p>
+                    <a href="#appointment" class="inline-flex items-center text-xs font-semibold text-emerald-400 hover:text-emerald-300 gap-1">Navbatga yozilish <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+                </div>
+
+                <!-- Service 4 -->
+                <div class="glass-card p-8 rounded-2xl relative group">
+                    <div class="w-14 h-14 rounded-2xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-purple-400 mb-6 group-hover:scale-110 group-hover:bg-purple-500 group-hover:text-white transition-all duration-300">
+                        <i data-lucide="stethoscope" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Pediatriya</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">Kichkintoylar uchun xavfsiz va g'amxo'r muhit. Bolalar kasalliklarini aniqlash va profilaktikasi.</p>
+                    <a href="#appointment" class="inline-flex items-center text-xs font-semibold text-purple-400 hover:text-purple-300 gap-1">Navbatga yozilish <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+                </div>
+
+                <!-- Service 5 -->
+                <div class="glass-card p-8 rounded-2xl relative group">
+                    <div class="w-14 h-14 rounded-2xl bg-amber-500/10 border border-amber-500/20 flex items-center justify-center text-amber-400 mb-6 group-hover:scale-110 group-hover:bg-amber-500 group-hover:text-white transition-all duration-300">
+                        <i data-lucide="smile" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Stomatologiya</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">Og'riqsiz tish davolash, estetika, ortodontiya va implantologiya xizmatlari.</p>
+                    <a href="#appointment" class="inline-flex items-center text-xs font-semibold text-amber-400 hover:text-amber-300 gap-1">Navbatga yozilish <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+                </div>
+
+                <!-- Service 6 -->
+                <div class="glass-card p-8 rounded-2xl relative group">
+                    <div class="w-14 h-14 rounded-2xl bg-rose-500/10 border border-rose-500/20 flex items-center justify-center text-rose-400 mb-6 group-hover:scale-110 group-hover:bg-rose-500 group-hover:text-white transition-all duration-300">
+                        <i data-lucide="scissors" class="w-7 h-7"></i>
+                    </div>
+                    <h3 class="text-xl font-bold text-white mb-3">Kam Invaziv Jarrohlik</h3>
+                    <p class="text-slate-400 text-sm leading-relaxed mb-4">Laparoskopik va zamonaviy jarrohlik amaliyotlari. Qisqa muddatli tiklanish davri.</p>
+                    <a href="#appointment" class="inline-flex items-center text-xs font-semibold text-rose-400 hover:text-rose-300 gap-1">Navbatga yozilish <i data-lucide="chevron-right" class="w-4 h-4"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Interactive 3D Department Visualizer -->
+    <section id="interactive-3d" class="py-20 bg-slate-900/60 border-y border-slate-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid lg:grid-cols-12 gap-8 items-center">
+                
+                <div class="lg:col-span-5 space-y-6">
+                    <span class="text-xs text-emerald-400 uppercase tracking-widest font-semibold">Interaktiv Texnologiya</span>
+                    <h2 class="text-3xl font-extrabold text-white">Organ va Tizimlar Vizualizatsiyasi</h2>
+                    <p class="text-slate-300 text-sm leading-relaxed">
+                        Saytimizdagi interaktiv 3D modul orqali klinikamizda tekshiriladigan asosiy a'zolarning 3D modellarini kuzatishingiz va ko'rikka tayyorgarlik ko'rishingiz mumkin.
+                    </p>
+
+                    <!-- Interactive Department Selector -->
+                    <div class="space-y-3 pt-4">
+                        <button onclick="changeVisualizerMode('dna')" id="btn-dna" class="w-full text-left p-4 rounded-xl glass-panel border border-sky-500/50 flex items-center justify-between transition-all hover:bg-slate-800">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="dna" class="w-5 h-5 text-sky-400"></i>
+                                <div>
+                                    <div class="text-sm font-semibold text-white">DNK va Genetik Tahlillar</div>
+                                    <div class="text-xs text-slate-400">Molekulyar diagnostika</div>
+                                </div>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+
+                        <button onclick="changeVisualizerMode('heart')" id="btn-heart" class="w-full text-left p-4 rounded-xl glass-panel border border-slate-800 flex items-center justify-between transition-all hover:bg-slate-800">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="heart" class="w-5 h-5 text-rose-400"></i>
+                                <div>
+                                    <div class="text-sm font-semibold text-white">Yurak Tizimi (Kardiologiya)</div>
+                                    <div class="text-xs text-slate-400">Pulslar va arterial bosim</div>
+                                </div>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+
+                        <button onclick="changeVisualizerMode('atoms')" id="btn-atoms" class="w-full text-left p-4 rounded-xl glass-panel border border-slate-800 flex items-center justify-between transition-all hover:bg-slate-800">
+                            <div class="flex items-center gap-3">
+                                <i data-lucide="atom" class="w-5 h-5 text-emerald-400"></i>
+                                <div>
+                                    <div class="text-sm font-semibold text-white">Biokimyoviy Tahlillar</div>
+                                    <div class="text-xs text-slate-400">Xujayralar va fermentlar</div>
+                                </div>
+                            </div>
+                            <i data-lucide="chevron-right" class="w-4 h-4 text-slate-400"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- 3D Viewer Container -->
+                <div class="lg:col-span-7 h-[420px] glass-panel rounded-3xl relative overflow-hidden flex items-center justify-center border border-slate-700">
+                    <div id="interactive-visualizer-canvas" class="w-full h-full cursor-grab active:cursor-grabbing"></div>
+                    
+                    <div class="absolute top-4 left-4 bg-slate-900/80 backdrop-blur px-3 py-1.5 rounded-lg border border-slate-700 text-xs text-slate-300">
+                        Holat: <span id="visualizer-status" class="text-sky-400 font-semibold">DNK Tahlili Mode</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- Doctors Section -->
+    <section id="doctors" class="py-24">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="text-center max-w-3xl mx-auto mb-16">
+                <h2 class="text-xs text-sky-400 uppercase tracking-widest font-semibold mb-2">Tajribali Mutaxassislar</h2>
+                <p class="text-3xl sm:text-4xl font-extrabold text-white">Bizning Shifokorlarimiz</p>
+                <p class="text-slate-400 mt-3">Ko'p yillik xalqaro va mahalliy tajribaga ega shifokorlar jamoasi sizning xizmatingizda.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+                <!-- Doctor 1 -->
+                <div class="glass-card rounded-2xl overflow-hidden group">
+                    <div class="h-64 bg-slate-800 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1622253692010-333f2da6031d?auto=format&fit=crop&q=80&w=600" alt="Dr. Xalilulloh Karimov" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x800/1e293b/0ea5e9?text=Shifokor'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute bottom-3 left-3 bg-sky-500/80 text-white text-xs px-2.5 py-1 rounded-md font-medium backdrop-blur">Bosh Shifokor</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-white">Dr. Xalilulloh Karimov</h3>
+                        <p class="text-xs text-sky-400 mt-1 font-medium">Bosh Kardiolog-Xirurg</p>
+                        <p class="text-xs text-slate-400 mt-3">18 yillik tajriba. Germaniya hamda Rossiyada malaka oshirgan.</p>
+                        <button onclick="selectDoctor('Dr. Xalilulloh Karimov', 'Kardiologiya')" class="w-full mt-5 py-2.5 bg-slate-800 hover:bg-sky-600 text-slate-200 hover:text-white rounded-xl text-xs font-semibold transition-all border border-slate-700 hover:border-sky-500">Qabuliga Yozilish</button>
+                    </div>
+                </div>
+
+                <!-- Doctor 2 -->
+                <div class="glass-card rounded-2xl overflow-hidden group">
+                    <div class="h-64 bg-slate-800 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1594824813566-888242a4b96f?auto=format&fit=crop&q=80&w=600" alt="Dr. Malika Rahimova" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x800/1e293b/0ea5e9?text=Shifokor'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute bottom-3 left-3 bg-indigo-500/80 text-white text-xs px-2.5 py-1 rounded-md font-medium backdrop-blur">Nevrolog</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-white">Dr. Malika Rahimova</h3>
+                        <p class="text-xs text-indigo-400 mt-1 font-medium">Oliy Toifali Nevrolog</p>
+                        <p class="text-xs text-slate-400 mt-3">12 yillik tajriba. Markaziy nerv tizimi kasalliklari mutaxassisi.</p>
+                        <button onclick="selectDoctor('Dr. Malika Rahimova', 'Nevrologiya')" class="w-full mt-5 py-2.5 bg-slate-800 hover:bg-indigo-600 text-slate-200 hover:text-white rounded-xl text-xs font-semibold transition-all border border-slate-700 hover:border-indigo-500">Qabuliga Yozilish</button>
+                    </div>
+                </div>
+
+                <!-- Doctor 3 -->
+                <div class="glass-card rounded-2xl overflow-hidden group">
+                    <div class="h-64 bg-slate-800 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1537368910025-700350fe46c7?auto=format&fit=crop&q=80&w=600" alt="Dr. Jamshid Aliyev" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x800/1e293b/0ea5e9?text=Shifokor'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute bottom-3 left-3 bg-emerald-500/80 text-white text-xs px-2.5 py-1 rounded-md font-medium backdrop-blur">UZI Mutaxassisi</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-white">Dr. Jamshid Aliyev</h3>
+                        <p class="text-xs text-emerald-400 mt-1 font-medium">Radiolog va UZI Eksperti</p>
+                        <p class="text-xs text-slate-400 mt-3">15 yillik tajriba. 4D va Doppler diagnostikasi bo'yicha mutaxassis.</p>
+                        <button onclick="selectDoctor('Dr. Jamshid Aliyev', 'UZI va Diagnostika')" class="w-full mt-5 py-2.5 bg-slate-800 hover:bg-emerald-600 text-slate-200 hover:text-white rounded-xl text-xs font-semibold transition-all border border-slate-700 hover:border-emerald-500">Qabuliga Yozilish</button>
+                    </div>
+                </div>
+
+                <!-- Doctor 4 -->
+                <div class="glass-card rounded-2xl overflow-hidden group">
+                    <div class="h-64 bg-slate-800 relative overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1559839734-2b71ea197ec2?auto=format&fit=crop&q=80&w=600" alt="Dr. Nigora Saidova" class="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500" onerror="this.src='https://placehold.co/600x800/1e293b/0ea5e9?text=Shifokor'">
+                        <div class="absolute inset-0 bg-gradient-to-t from-slate-900 via-transparent to-transparent opacity-80"></div>
+                        <span class="absolute bottom-3 left-3 bg-purple-500/80 text-white text-xs px-2.5 py-1 rounded-md font-medium backdrop-blur">Pediatr</span>
+                    </div>
+                    <div class="p-6">
+                        <h3 class="text-lg font-bold text-white">Dr. Nigora Saidova</h3>
+                        <p class="text-xs text-purple-400 mt-1 font-medium">Oliy Toifali Pediatr</p>
+                        <p class="text-xs text-slate-400 mt-3">10 yillik tajriba. Bolalar salomatligi va rivojlanishi nazorati.</p>
+                        <button onclick="selectDoctor('Dr. Nigora Saidova', 'Pediatriya')" class="w-full mt-5 py-2.5 bg-slate-800 hover:bg-purple-600 text-slate-200 hover:text-white rounded-xl text-xs font-semibold transition-all border border-slate-700 hover:border-purple-500">Qabuliga Yozilish</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Appointment Form Section -->
+    <section id="appointment" class="py-20 bg-slate-900/80 relative">
+        <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-panel p-8 sm:p-12 rounded-3xl border border-sky-500/30 shadow-2xl relative overflow-hidden">
+                <div class="absolute -top-24 -right-24 w-60 h-60 bg-sky-500/10 rounded-full blur-2xl pointer-events-none"></div>
+
+                <div class="text-center max-w-xl mx-auto mb-10">
+                    <span class="text-xs text-sky-400 uppercase tracking-widest font-semibold">Tezkor va Qulay</span>
+                    <h2 class="text-3xl font-extrabold text-white mt-1">Shifokor Qabuliga Yozilish</h2>
+                    <p class="text-slate-400 text-xs sm:text-sm mt-2">Ma'lumotlaringizni qoldiring, operatorlarimiz siz bilan 10 daqiqa ichida bog'lanishadi.</p>
+                </div>
+
+                <form id="booking-form" onsubmit="handleFormSubmit(event)" class="space-y-6">
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-2">Ism va Familiyangiz *</label>
+                            <input type="text" id="patient-name" required placeholder="Masalan: Ali Valiyev" class="w-full bg-slate-950/80 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:outline-none focus:border-sky-500 transition-colors">
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-2">Telefon Raqamingiz *</label>
+                            <input type="tel" id="patient-phone" required placeholder="+998 90 123 45 67" class="w-full bg-slate-950/80 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:outline-none focus:border-sky-500 transition-colors">
+                        </div>
+                    </div>
+
+                    <div class="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-2">Yonalish / Bo'lim</label>
+                            <select id="department-select" class="w-full bg-slate-950/80 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:outline-none focus:border-sky-500 transition-colors">
+                                <option value="Kardiologiya">Kardiologiya</option>
+                                <option value="Nevrologiya">Nevrologiya</option>
+                                <option value="UZI va Diagnostika">UZI va Diagnostika</option>
+                                <option value="Pediatriya">Pediatriya</option>
+                                <option value="Stomatologiya">Stomatologiya</option>
+                                <option value="Jarrohlik">Jarrohlik</option>
+                            </select>
+                        </div>
+
+                        <div>
+                            <label class="block text-xs font-medium text-slate-300 mb-2">Qabul Sanasi</label>
+                            <input type="date" id="appointment-date" required class="w-full bg-slate-950/80 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:outline-none focus:border-sky-500 transition-colors">
+                        </div>
+                    </div>
+
+                    <div>
+                        <label class="block text-xs font-medium text-slate-300 mb-2">Qo'shimcha Izoh (Ixtiyoriy)</label>
+                        <textarea id="patient-notes" rows="3" placeholder="Sizni nima bezovta qilayotganini qisqacha yozib qoldiring..." class="w-full bg-slate-950/80 border border-slate-700 rounded-xl px-4 py-3 text-slate-100 text-sm focus:outline-none focus:border-sky-500 transition-colors"></textarea>
+                    </div>
+
+                    <button type="submit" class="w-full py-4 bg-gradient-to-r from-sky-500 to-indigo-600 hover:from-sky-400 hover:to-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-sky-500/25 transition-all text-sm uppercase tracking-wider flex items-center justify-center gap-2">
+                        <i data-lucide="send" class="w-4 h-4"></i>
+                        <span>Arizani Yuborish</span>
+                    </button>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- Confirmation Modal -->
+    <div id="modal-success" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/80 backdrop-blur-md hidden">
+        <div class="glass-panel p-8 rounded-3xl max-w-md w-full border border-emerald-500/30 text-center space-y-4 animate-in fade-in zoom-in duration-300">
+            <div class="w-16 h-16 rounded-full bg-emerald-500/20 text-emerald-400 mx-auto flex items-center justify-center">
+                <i data-lucide="check-circle-2" class="w-10 h-10"></i>
+            </div>
+            <h3 class="text-2xl font-bold text-white">Arizangiz Qabul Qilindi!</h3>
+            <p id="modal-text-details" class="text-slate-300 text-sm leading-relaxed">
+                Tashakkur! Operatorlarimiz tez orada siz ko'rsatgan telefon raqami bilan bog'lanib, qabul vaqtini tasdiqlashadi.
+            </p>
+            <button onclick="closeModal()" class="w-full py-3 bg-slate-800 hover:bg-slate-700 text-white rounded-xl font-semibold text-sm transition-colors border border-slate-700">Tushunarli</button>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer id="contact" class="bg-slate-950 border-t border-slate-800 pt-16 pb-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-4 gap-10 mb-12">
+                <!-- Clinic Info -->
+                <div class="space-y-4">
+                    <div class="flex items-center gap-3">
+                        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 flex items-center justify-center shadow-lg">
+                            <i data-lucide="activity" class="w-5 h-5 text-white"></i>
+                        </div>
+                        <span class="text-lg font-bold text-white">XALILULLOH</span>
+                    </div>
+                    <p class="text-xs text-slate-400 leading-relaxed">
+                        Innovatsion texnologiyalar va yuqori darajadagi tibbiy xizmat orqali aholi salomatligini muhofaza qilish.
+                    </p>
+                    <div class="flex items-center gap-3 pt-2">
+                        <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400 hover:text-sky-400 hover:bg-slate-700 transition-colors"><i data-lucide="facebook" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400 hover:text-sky-400 hover:bg-slate-700 transition-colors"><i data-lucide="instagram" class="w-4 h-4"></i></a>
+                        <a href="#" class="w-8 h-8 rounded-lg bg-slate-800 flex items-center justify-center text-slate-400 hover:text-sky-400 hover:bg-slate-700 transition-colors"><i data-lucide="send" class="w-4 h-4"></i></a>
+                    </div>
+                </div>
+
+                <!-- Quick Links -->
+                <div>
+                    <h4 class="text-sm font-bold text-white mb-4">Tezkor Havolalar</h4>
+                    <ul class="space-y-2.5 text-xs text-slate-400">
+                        <li><a href="#home" class="hover:text-sky-400 transition-colors">Bosh sahifa</a></li>
+                        <li><a href="#services" class="hover:text-sky-400 transition-colors">Bo'limlar va Xizmatlar</a></li>
+                        <li><a href="#interactive-3d" class="hover:text-sky-400 transition-colors">3D Vizualizator</a></li>
+                        <li><a href="#doctors" class="hover:text-sky-400 transition-colors">Bizning Shifokorlar</a></li>
+                        <li><a href="#appointment" class="hover:text-sky-400 transition-colors">Onlayn Qabul</a></li>
+                    </ul>
+                </div>
+
+                <!-- Contact Details -->
+                <div>
+                    <h4 class="text-sm font-bold text-white mb-4">Bog'lanish</h4>
+                    <ul class="space-y-3 text-xs text-slate-400">
+                        <li class="flex items-start gap-2.5">
+                            <i data-lucide="map-pin" class="w-4 h-4 text-sky-400 shrink-0 mt-0.5"></i>
+                            <span>Toshkent shahri, Chilonzor tumani, 10-mavze, 24-uy</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i data-lucide="phone" class="w-4 h-4 text-sky-400 shrink-0"></i>
+                            <span>+998 (71) 200-00-03 / +998 90 999-00-03</span>
+                        </li>
+                        <li class="flex items-center gap-2.5">
+                            <i data-lucide="mail" class="w-4 h-4 text-sky-400 shrink-0"></i>
+                            <span>info@xalilulloh-clinic.uz</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Hours & Status -->
+                <div>
+                    <h4 class="text-sm font-bold text-white mb-4">Ish Vaqti</h4>
+                    <div class="space-y-2 text-xs text-slate-400">
+                        <div class="flex justify-between py-1 border-b border-slate-800">
+                            <span>Dushanba - Shanba:</span>
+                            <span class="text-slate-200">08:00 - 20:00</span>
+                        </div>
+                        <div class="flex justify-between py-1 border-b border-slate-800">
+                            <span>Yekshanba:</span>
+                            <span class="text-slate-200">09:00 - 15:00</span>
+                        </div>
+                        <div class="mt-4 p-3 rounded-xl bg-emerald-500/10 border border-emerald-500/20 text-emerald-400 text-xs font-medium flex items-center gap-2">
+                            <i data-lucide="shield-check" class="w-4 h-4 shrink-0"></i>
+                            <span>24/7 Shoshilinch tez tibbiy yordam xizmati mavjud</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="border-t border-slate-800/80 pt-6 text-center text-xs text-slate-500">
+                <p>&copy; 2026 "Xalilulloh Klinikasi". Barcha huquqlar himoyalangan.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Initialize Lucide Icons
+        lucide.createIcons();
+
+        // Set default date picker to tomorrow
+        const datePicker = document.getElementById('appointment-date');
+        const tomorrow = new Date();
+        tomorrow.setDate(tomorrow.getDate() + 1);
+        datePicker.value = tomorrow.toISOString().split('T')[0];
+
+        // Mobile menu toggle logic
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        mobileMenuBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // Form submission logic
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const name = document.getElementById('patient-name').value;
+            const phone = document.getElementById('patient-phone').value;
+            const dept = document.getElementById('department-select').value;
+            const date = document.getElementById('appointment-date').value;
+
+            const modalDetails = document.getElementById('modal-text-details');
+            modalDetails.innerHTML = `Xurmatli <b>${name}</b>, sizning arizangiz <b>${dept}</b> bo'limiga (Sana: ${date}) muvaffaqiyatli qabul qilindi. Tez orada <b>${phone}</b> raqamingizga qo'ng'iroq qilamiz.`;
+            
+            document.getElementById('modal-success').classList.remove('hidden');
+            document.getElementById('booking-form').reset();
+        }
+
+        function closeModal() {
+            document.getElementById('modal-success').classList.add('hidden');
+        }
+
+        function selectDoctor(docName, dept) {
+            const deptSelect = document.getElementById('department-select');
+            deptSelect.value = dept;
+            const appSection = document.getElementById('appointment');
+            appSection.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        // ==========================================
+        // THREE.JS 3D HERO HELIX & SCENE INITIALIZATION
+        // ==========================================
+        let heroScene, heroCamera, heroRenderer, dnaGroup, particlesMesh;
+
+        function initHero3D() {
+            const container = document.getElementById('hero-3d-container');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            heroScene = new THREE.Scene();
+
+            heroCamera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            heroCamera.position.set(0, 0, 18);
+
+            heroRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            heroRenderer.setSize(width, height);
+            heroRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(heroRenderer.domElement);
+
+            // Lights
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.7);
+            heroScene.add(ambientLight);
+
+            const pointLight1 = new THREE.PointLight(0x0ea5e9, 2, 50);
+            pointLight1.position.set(10, 10, 10);
+            heroScene.add(pointLight1);
+
+            const pointLight2 = new THREE.PointLight(0x818cf8, 2, 50);
+            pointLight2.position.set(-10, -10, -10);
+            heroScene.add(pointLight2);
+
+            // DNA Helix Geometry Construction
+            dnaGroup = new THREE.Group();
+
+            const sphereGeo = new THREE.SphereGeometry(0.22, 16, 16);
+            const matCyan = new THREE.MeshPhongMaterial({ color: 0x38bdf8, emissive: 0x0284c7, shininess: 80 });
+            const matIndigo = new THREE.MeshPhongMaterial({ color: 0x818cf8, emissive: 0x4338ca, shininess: 80 });
+            const matCylinder = new THREE.MeshPhongMaterial({ color: 0x334155, transparent: true, opacity: 0.8 });
+
+            const count = 30;
+            const radius = 2.5;
+            const heightStep = 0.35;
+
+            for (let i = 0; i < count; i++) {
+                const angle = i * 0.3;
+                const y = (i - count / 2) * heightStep;
+
+                // Strand 1
+                const x1 = Math.cos(angle) * radius;
+                const z1 = Math.sin(angle) * radius;
+                const sphere1 = new THREE.Mesh(sphereGeo, matCyan);
+                sphere1.position.set(x1, y, z1);
+                dnaGroup.add(sphere1);
+
+                // Strand 2
+                const x2 = Math.cos(angle + Math.PI) * radius;
+                const z2 = Math.sin(angle + Math.PI) * radius;
+                const sphere2 = new THREE.Mesh(sphereGeo, matIndigo);
+                sphere2.position.set(x2, y, z2);
+                dnaGroup.add(sphere2);
+
+                // Connecting Bar
+                const distance = new THREE.Vector3(x1, y, z1).distanceTo(new THREE.Vector3(x2, y, z2));
+                const cylinderGeo = new THREE.CylinderGeometry(0.04, 0.04, distance, 8);
+                const bar = new THREE.Mesh(cylinderGeo, matCylinder);
+
+                bar.position.set((x1 + x2) / 2, y, (z1 + z2) / 2);
+                bar.lookAt(new THREE.Vector3(x1, y, z1));
+                bar.rotateX(Math.PI / 2);
+                dnaGroup.add(bar);
+            }
+
+            heroScene.add(dnaGroup);
+
+            // Floating Background Particles
+            const particlesGeo = new THREE.BufferGeometry();
+            const pCount = 200;
+            const posArray = new Float32Array(pCount * 3);
+
+            for(let i=0; i < pCount * 3; i++) {
+                posArray[i] = (Math.random() - 0.5) * 30;
+            }
+
+            particlesGeo.setAttribute('position', new THREE.BufferAttribute(posArray, 3));
+            const pMat = new THREE.PointsMaterial({
+                size: 0.08,
+                color: 0x38bdf8,
+                transparent: true,
+                opacity: 0.6
+            });
+
+            particlesMesh = new THREE.Points(particlesGeo, pMat);
+            heroScene.add(particlesMesh);
+
+            // Interactive Drag Controls for Hero Canvas
+            let isDragging = false;
+            let previousMousePosition = { x: 0, y: 0 };
+
+            container.addEventListener('mousedown', (e) => {
+                isDragging = true;
+            });
+
+            container.addEventListener('mousemove', (e) => {
+                if (isDragging) {
+                    const deltaMove = {
+                        x: e.clientX - previousMousePosition.x,
+                        y: e.clientY - previousMousePosition.y
+                    };
+
+                    dnaGroup.rotation.y += deltaMove.x * 0.008;
+                    dnaGroup.rotation.x += deltaMove.y * 0.008;
+                }
+                previousMousePosition = { x: e.clientX, y: e.clientY };
+            });
+
+            window.addEventListener('mouseup', () => {
+                isDragging = false;
+            });
+
+            // Touch support for mobile
+            container.addEventListener('touchmove', (e) => {
+                if (e.touches.length === 1) {
+                    const touch = e.touches[0];
+                    if (previousMousePosition.x) {
+                        const deltaX = touch.clientX - previousMousePosition.x;
+                        dnaGroup.rotation.y += deltaX * 0.008;
+                    }
+                    previousMousePosition = { x: touch.clientX, y: touch.clientY };
+                }
+            }, { passive: true });
+        }
+
+        // ==========================================
+        // INTERACTIVE 3D VISUALIZER MODULE
+        // ==========================================
+        let visScene, visCamera, visRenderer, currentVisMesh;
+
+        function initVisualizer3D() {
+            const container = document.getElementById('interactive-visualizer-canvas');
+            const width = container.clientWidth;
+            const height = container.clientHeight;
+
+            visScene = new THREE.Scene();
+
+            visCamera = new THREE.PerspectiveCamera(45, width / height, 0.1, 1000);
+            visCamera.position.set(0, 0, 8);
+
+            visRenderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
+            visRenderer.setSize(width, height);
+            visRenderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+            container.appendChild(visRenderer.domElement);
+
+            const ambientLight = new THREE.AmbientLight(0xffffff, 0.8);
+            visScene.add(ambientLight);
+
+            const pointLight = new THREE.PointLight(0x38bdf8, 2, 50);
+            pointLight.position.set(5, 5, 5);
+            visScene.add(pointLight);
+
+            // Default Mode: DNA Model
+            loadVisModel('dna');
+        }
+
+        function loadVisModel(type) {
+            if (currentVisMesh) visScene.remove(currentVisMesh);
+
+            currentVisMesh = new THREE.Group();
+
+            if (type === 'dna') {
+                const geo = new THREE.TorusKnotGeometry(1.5, 0.3, 100, 16);
+                const mat = new THREE.MeshStandardMaterial({ color: 0x0ea5e9, wireframe: true });
+                const mesh = new THREE.Mesh(geo, mat);
+                currentVisMesh.add(mesh);
+            } else if (type === 'heart') {
+                // Abstract Heart 3D shape simulation
+                const heartShape = new THREE.Shape();
+                heartShape.moveTo(25, 25);
+                heartShape.bezierCurveTo(25, 25, 20, 0, 0, 0);
+                heartShape.bezierCurveTo(-30, 0, -30, 35, -30, 35);
+                heartShape.bezierCurveTo(-30, 55, -10, 77, 25, 95);
+                heartShape.bezierCurveTo(60, 77, 80, 55, 80, 35);
+                heartShape.bezierCurveTo(80, 35, 80, 0, 50, 0);
+                heartShape.bezierCurveTo(35, 0, 25, 25, 25, 25);
+
+                const extrudeSettings = { depth: 15, bevelEnabled: true, bevelSegments: 3, steps: 2, bevelSize: 3, bevelThickness: 3 };
+                const geo = new THREE.ExtrudeGeometry(heartShape, extrudeSettings);
+                geo.center();
+                geo.scale(0.025, 0.025, 0.025);
+
+                const mat = new THREE.MeshStandardMaterial({ color: 0xf43f5e, roughness: 0.3, metalness: 0.2 });
+                const mesh = new THREE.Mesh(geo, mat);
+                mesh.rotation.x = Math.PI;
+                currentVisMesh.add(mesh);
+            } else if (type === 'atoms') {
+                // Molecule / Atom Model
+                const coreGeo = new THREE.IcosahedronGeometry(1, 2);
+                const coreMat = new THREE.MeshPhongMaterial({ color: 0x10b981, wireframe: true });
+                const core = new THREE.Mesh(coreGeo, coreMat);
+                currentVisMesh.add(core);
+
+                const ringGeo = new THREE.TorusGeometry(2.2, 0.04, 16, 100);
+                const ringMat = new THREE.MeshBasicMaterial({ color: 0x34d399 });
+                
+                const ring1 = new THREE.Mesh(ringGeo, ringMat);
+                const ring2 = new THREE.Mesh(ringGeo, ringMat);
+                ring2.rotation.x = Math.PI / 3;
+                
+                currentVisMesh.add(ring1);
+                currentVisMesh.add(ring2);
+            }
+
+            visScene.add(currentVisMesh);
+        }
+
+        function changeVisualizerMode(mode) {
+            loadVisModel(mode);
+            const statusText = document.getElementById('visualizer-status');
+            const btnDna = document.getElementById('btn-dna');
+            const btnHeart = document.getElementById('btn-heart');
+            const btnAtoms = document.getElementById('btn-atoms');
+
+            // Reset styles
+            [btnDna, btnHeart, btnAtoms].forEach(btn => btn.classList.replace('border-sky-500/50', 'border-slate-800'));
+
+            if (mode === 'dna') {
+                statusText.innerText = "DNK va Genetik Tahlillar";
+                btnDna.classList.replace('border-slate-800', 'border-sky-500/50');
+            } else if (mode === 'heart') {
+                statusText.innerText = "Yurak va Kardiologiya Vizualizatsiyasi";
+                btnHeart.classList.replace('border-slate-800', 'border-sky-500/50');
+            } else if (mode === 'atoms') {
+                statusText.innerText = "Biokimyo va Hujayra Diagnostikasi";
+                btnAtoms.classList.replace('border-slate-800', 'border-sky-500/50');
+            }
+        }
+
+        // ==========================================
+        // ANIMATION LOOP & RESIZE HANDLING
+        // ==========================================
+        function animate() {
+            requestAnimationFrame(animate);
+
+            // Rotate Hero DNA
+            if (dnaGroup) {
+                dnaGroup.rotation.y += 0.005;
+            }
+            if (particlesMesh) {
+                particlesMesh.rotation.y -= 0.0008;
+            }
+
+            // Rotate Interactive Visualizer Object
+            if (currentVisMesh) {
+                currentVisMesh.rotation.y += 0.01;
+                currentVisMesh.rotation.x += 0.003;
+            }
+
+            if (heroRenderer && heroScene && heroCamera) {
+                heroRenderer.render(heroScene, heroCamera);
+            }
+            if (visRenderer && visScene && visCamera) {
+                visRenderer.render(visScene, visCamera);
+            }
+        }
+
+        window.addEventListener('resize', () => {
+            // Resize Hero Canvas
+            const heroContainer = document.getElementById('hero-3d-container');
+            if (heroContainer && heroCamera && heroRenderer) {
+                const w = heroContainer.clientWidth;
+                const h = heroContainer.clientHeight;
+                heroCamera.aspect = w / h;
+                heroCamera.updateProjectionMatrix();
+                heroRenderer.setSize(w, h);
+            }
+
+            // Resize Visualizer Canvas
+            const visContainer = document.getElementById('interactive-visualizer-canvas');
+            if (visContainer && visCamera && visRenderer) {
+                const w = visContainer.clientWidth;
+                const h = visContainer.clientHeight;
+                visCamera.aspect = w / h;
+                visCamera.updateProjectionMatrix();
+                visRenderer.setSize(w, h);
+            }
+        });
+
+        // Start 3D scenes on load
+        window.onload = function() {
+            initHero3D();
+            initVisualizer3D();
+            animate();
+        };
+    </script>
+</body>
+</html>
